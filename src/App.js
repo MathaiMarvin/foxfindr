@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
 
 function App() {
+
+  const [image, setImage] = useState("https://randomfox.ca/images/41.jpg")
+  const [likes, setLikes] = useState(0)
+
+  function handleNewFoxClick (){
+    
+    fetch ("https://randomfox.ca/floof/")
+      .then((res)=>res.json())
+      .then(({image})=>{
+        setImage(image);
+        setLikes(0)
+      })
+  }
+
+  function handleLikes ( ) {
+      setLikes ((likes)=>{
+        return (likes) +1
+      })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Fox Findr</h1>
+      <div className="buttons">
+          <button onClick={handleNewFoxClick}>New Please</button>
+          <button onClick={handleLikes}>Likes: {likes}</button>
+      </div>
+      <img src={image} alt="Random Fox" />
     </div>
   );
 }
